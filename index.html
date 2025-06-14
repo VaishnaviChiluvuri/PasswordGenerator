@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            background-color:rgb(8, 37, 0);
+            text-align:center;
+        }
+        #heading{
+            background-color:white;
+            width:40%;
+            text-align:center;
+            border-radius:20px;
+            margin-left:30%;
+            margin-top:14%;
+        }
+        h1{
+            padding:6px;
+        }
+        #password{
+            height:30px;
+            width:250px;
+            border:none;
+            border-radius:15px;
+            margin-top:30px;
+            padding-left:20px;
+            font-size:16px;
+        }
+        #textpassword{
+            color:#000000;
+            font-size:16px;
+            font-weight:bold;
+            font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            margin-top:30px;
+        }
+        #box1{
+            display:flex;
+            gap:20px;
+            justify-content: center;
+            align-items:center;
+        }
+        button{
+            height:30px;
+            width:100px;
+            font-size:17px;
+            margin-top:30px;
+            background-color:white;
+            border-radius:20px;
+            border:none;
+        }
+        #range{
+            accent-color:blue;
+            margin-top:25px;
+        }
+        #lengthValue{
+            color:white;
+            margin-left:10px;
+        }
+        #text{
+            color:white;
+            font-size:16px;
+        }
+        #letterbox,#numberbox{
+            accent-color:rgb(102, 102, 255);
+        }
+        label{
+            color:white;
+        }
+    </style>
+</head>
+<body>
+    <div>
+    <div id="heading"><h1> Password-Generator </h1></div>
+    <div>
+        <div id="box1">
+        <input type="text" placeholder="Your password will appear here." id="password" readonly>
+        <button id="textpassword" onclick="generatePassword()"> Password </button>
+        <button onclick="copyPassword()">Copy</button>
+        </div>
+        <br>
+        <input type="range" min="6" max="100" id="range">
+        <label>Length :<span id="lengthValue">100 </span></label>
+        <input type="checkbox" id="letterbox"><label id="text"> Letters </label>
+        <input type="checkbox" id="numberbox"><label id="text"> Numbers </label>
+    </div>
+
+    <script>
+        const lengthSlider = document.getElementById("range");
+        const lengthValue = document.getElementById("lengthValue");
+        const includeChars = document.getElementById("letterbox");
+        const includeNums = document.getElementById("numberbox");
+        const passwordInput = document.getElementById("password");
+
+lengthSlider.oninput = () => {
+  lengthValue.textContent = lengthSlider.value;
+};
+
+function generatePassword() {
+  const length = parseInt(lengthSlider.value);
+  const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const nums = "0123456789";
+
+  let characters = "";
+  if (includeChars.checked) characters += chars;
+  if (includeNums.checked) characters += nums;
+
+  let password = "";
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    password += characters[randomIndex];
+  }
+
+  if(passwordInput.value=password){
+    return password;
+  }
+  else{
+     return "Select options!";
+  }
+  
+}
+
+function copyPassword() {
+  passwordInput.select();
+  document.execCommand("copy");
+  alert("Password copied to clipboard!");
+}
+
+    
+    </script>
+</body>
+</html>
